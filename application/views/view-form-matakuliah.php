@@ -5,6 +5,9 @@
 <body>
     <center>
         <form action="<?= base_url('matakuliah/cetak'); ?>" method="post">
+        <?php echo validation_errors(); ?>
+        <?php echo form_open('form/cetak') ?>
+        
         <table>
             <tr>
                 <th colspan="3">
@@ -36,9 +39,9 @@
                 <td>
                     <select name="sks" id="sks">
                         <option value="">Pilih SKS</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                        <option value="">4</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
                     </select>
                 </td>
             </tr>
