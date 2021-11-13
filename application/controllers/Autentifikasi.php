@@ -1,4 +1,5 @@
 <?php 
+
 class Autentifikasi extends CI_Controller 
 { 
     public function index() 
@@ -7,8 +8,13 @@ class Autentifikasi extends CI_Controller
         if($this->session->userdata('email')){ 
             redirect('user'); 
         }
+
         $this->form_validation->set_rules('email', 'Alamat Email', 'required|trim|valid_email', 
-        [ 'required' => 'Email Harus diisi!!', 'valid_email' => 'Email Tidak Benar!!']); 
+        [ 
+            'required' => 'Email Harus diisi!!', 
+            'valid_email' => 'Email Tidak Benar!!'
+        ]); 
+        
         $this->form_validation->set_rules('password', 'Password', 'required|trim', 
         [ 'required' => 'Password Harus diisi' ]); 
         
@@ -29,6 +35,7 @@ class Autentifikasi extends CI_Controller
     { 
         $email = htmlspecialchars($this->input->post('email', true)); 
         $password = $this->input->post('password', true); 
+        
         $user = $this->ModelUser->cekData(['email' => $email])->row_array(); 
         //jika usernya ada 
         if ($user) { 
@@ -42,15 +49,8 @@ class Autentifikasi extends CI_Controller
                     ];
                     
                     $this->session->set_userdata($data); 
-                    
-                    if ($user['role_id'] == 1) { 
-                        redirect('admin'); 
-                    } else { 
-                        if ($user['image'] == 'default.jpg') { 
-                            $this->session->set_flashdata('pesan', '<div class="alert alert-info alert-message" role="alert">Silahkan Ubah Profile Anda untuk Ubah Photo Profil</div>'); 
-                        } 
-                        redirect('user'); 
-                    } 
+                    redirect('admin'); 
+                
                 } else { 
                     $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Password salah!!</div>'); 
                     redirect('autentifikasi'); 
